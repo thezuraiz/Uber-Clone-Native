@@ -41,6 +41,7 @@ const InputField = ({
             <TextInput
               className={`rounded-full p-4 font-JakartaSemiBold text-[15px] flex-1 text-left ${inputStyle}`}
               secureTextEntry={secureTextEntry}
+              placeholder={placeholder}
               {...props}
             />
           </View>
