@@ -1,6 +1,6 @@
-import { StatusBar } from "expo-status-bar";
-import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useFonts } from "expo-font";
+import { SplashScreen, Stack } from "expo-router";
+import { useEffect } from "react";
 import "../global.css";
 
 export const unstable_settings = {
@@ -8,10 +8,31 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
+  const [loaded] = useFonts({
+    "Jakarta-Bold": require("../assets/fonts/PlusJakartaSans-Bold.ttf"),
+    "Jakarta-ExtraBold": require("../assets/fonts/PlusJakartaSans-ExtraBold.ttf"),
+    "Jakarta-ExtraLight": require("../assets/fonts/PlusJakartaSans-ExtraLight.ttf"),
+    "Jakarta-Light": require("../assets/fonts/PlusJakartaSans-Light.ttf"),
+    "Jakarta-Medium": require("../assets/fonts/PlusJakartaSans-Medium.ttf"),
+    Jakarta: require("../assets/fonts/PlusJakartaSans-Regular.ttf"),
+    "Jakarta-SemiBold": require("../assets/fonts/PlusJakartaSans-SemiBold.ttf"),
+  });
+
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
+
+  if (!loaded) {
+    return null;
+  }
   return (
-    <SafeAreaView>
-      <StatusBar style="auto" />
-      <Text className="font-bold">Hioi</Text>
-    </SafeAreaView>
+    <Stack>
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="(root)" options={{ headerShown: false }} />
+      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      <Stack.Screen name="+not-found" />
+    </Stack>
   );
 }
