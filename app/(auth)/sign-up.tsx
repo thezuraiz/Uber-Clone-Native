@@ -2,6 +2,7 @@ import CustomButton from "@/components/Custom-Button";
 import InputField from "@/components/Input-Field";
 import OAuth from "@/components/O-auth";
 import { icons, images } from "@/constants";
+import { fetchAPI } from "@/lib/fetch";
 import { useSignUp } from "@clerk/clerk-expo";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
@@ -26,6 +27,7 @@ const SignUp = () => {
       await signUp.create({
         emailAddress: form.email,
         password: form.password,
+        firstName: form.name,
       });
 
       // Send user an email with verification code
@@ -53,6 +55,14 @@ const SignUp = () => {
 
       if (signUpAttempt.status === "complete") {
         // Todo: Create a user on Database
+        await fetchAPI("/(api)/user", {
+          method: "POST",
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            clerkId: signUpAttempt.createdUserId,
+          }),
+        });
         await setActive({ session: signUpAttempt.createdSessionId });
         setVerification({ ...verification, state: "success" });
       } else {
@@ -61,7 +71,7 @@ const SignUp = () => {
           state: "failed",
           error: "Verification Failed",
         });
-        console.error(JSON.stringify(signUpAttempt, null, 2));
+        // console.error(JSON.stringify(signUpAttempt, null, 2));
       }
     } catch (err: any) {
       setVerification({
@@ -69,7 +79,7 @@ const SignUp = () => {
         state: "failed",
         error: err.errors[0].longMessage,
       });
-      // console.error(JSON.stringify(err, null, 2));
+      // console.error("error: ", JSON.stringify(err, null, 2));
       Alert.alert("Error", err.errors[0].longMessage);
     }
   };
