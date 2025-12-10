@@ -26,7 +26,9 @@ const SignIn = () => {
         await setActive({ session: signInAttempt.createdSessionId });
         router.replace("/");
       } else {
-        console.error(JSON.stringify(signInAttempt, null, 2));
+        Alert.alert("Error", "Sign-in could not be completed.");
+        console.warn("SignIn Attempt:", signInAttempt);
+        // console.error(JSON.stringify(signInAttempt, null, 2));
       }
     } catch (err: any) {
       // console.error(JSON.stringify(err, null, 2));
