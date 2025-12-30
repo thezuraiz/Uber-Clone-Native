@@ -142,6 +142,7 @@ const Map = () => {
       setMarkers(newMarkers);
     }
   }, [drivers]);
+
   return (
     <MapView
       provider={PROVIDER_DEFAULT}

@@ -53,3 +53,8 @@ Join our community of developers creating universal apps.
   npm i react-native-maps
   npm i react-native-maps-directions
   npm i expo-location
+  npm i react-native-google-places-autocomplete
+  npm i react-native-gesture-handler
+  npm i @gorhom/bottom-sheet
+  npx expo install react-native-reanimated react-native-gesture-handler
+  npm install @gorhom/bottom-sheet
